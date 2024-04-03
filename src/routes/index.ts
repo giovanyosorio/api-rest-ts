@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {readdirSync} from "fs"
 
+//filename
 const cleanFilename=(filename:String)=>{
     const file=filename.split(".").shift()
     return file
