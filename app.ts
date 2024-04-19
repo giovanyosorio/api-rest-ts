@@ -8,7 +8,7 @@ const app=express()
 app.use(router)
 app.use(express.json())
 app.use(cors())
-db().then(()=>console.log("succesfull"))
+db().then(()=>console.log("Connecting to the database"))
 
 
 app.listen(PORT,()=>{
