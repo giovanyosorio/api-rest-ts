@@ -1,12 +1,13 @@
-import { Router,Request,Response } from "express";
+import { Router } from "express";
 import { deleteItem, getItem, getItems, posItem, updateItem } from "../controllers/item";
+import { logMiddleware } from "../middleware/log";
 
 
 const router=Router()
 /**
  * Get
  */
-router.get("/",getItems)
+router.get("/",logMiddleware,getItems)
 router.get("/:id",getItem)
 router.put("/:id",updateItem)
 router.post("/",posItem)
