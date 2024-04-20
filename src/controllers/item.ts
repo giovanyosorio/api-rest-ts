@@ -1,50 +1,66 @@
 import { Request, Response } from "express"
 import { handlehttp } from "../utils/error.handler"
+import { deleteCar, getCar, getCars, insertCar, updateCar } from "../services/items"
 
- const getItem=(req:Request,res:Response)=>{
+
+
+ const getItem=async(req:Request,res:Response)=>{
 
     try {
-        console.log("get item")
+        const {id}=req.params
+        const getCarByid=await getCar(id)
+       console.log(getCarByid)
+       res.send(getCarByid)
+      
     } catch (error) {
-        handlehttp(res,"Error get Item")
+        handlehttp(res,"Error get Item"+error)
     }
 
 }
 
 
-export const getItems=(req:Request,res:Response)=>{
+export const getItems=async(req:Request,res:Response)=>{
     try {
+        const getCar=await getCars()
+        console.log(getCar)
+        res.send(getCar)
         
-        console.log("get items")
     } catch (error) {
-        handlehttp(res,"Error get Items")
+        handlehttp(res,"Error get Items"+error)
     }
 }
 
-export const updateItem=(req:Request,res:Response)=>{
+export const updateItem=async(req:Request,res:Response)=>{
  try {
-    
-    console.log("update")
+    const {id}=req.params
+    const body=req.body
+    const updateItem=await updateCar(id,body)
+    console.log(updateItem)
+    res.send(updateItem)
  } catch (error) {
     handlehttp(res,"Error update Items")
  }   
 }
 
- export const posItem=(req:Request,res:Response)=>{
+ export const posItem=async (req:Request,res:Response)=>{
     try {
         const body=req.body
-        console.log(body)
+       const responseItem=await insertCar(body)
+       res.send(responseItem)
+       
     } catch (error) {
-        handlehttp(res,"Error post Items    ")
+        handlehttp(res,"Error post Items    "+error)
     }
 }
 
-export const deleteItem=(req:Request,res:Response)=>{
+export const deleteItem=async(req:Request,res:Response)=>{
     try {
-        const {body}=req
-        console.log(body)
+        const {id}=req.params
+        const deleteItem=await deleteCar(id)
+        console.log(deleteItem)
+        res.send(deleteItem)
     } catch (error) {
-        handlehttp(res,"Error post Items    ")
+        handlehttp(res,"Error post Items" +error)
     }
 }
 
