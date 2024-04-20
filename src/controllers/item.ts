@@ -22,14 +22,14 @@ import { deleteCar, getCar, getCars, insertCar, updateCar } from "../services/it
 export const getItems=async(req:Request,res:Response)=>{
     try {
         const getCar=await getCars()
-        console.log(getCar)
-        res.send(getCar)
+        const data=getCar ?getCar:"Not found"
+        console.log(data)
+        res.send(data)
         
     } catch (error) {
         handlehttp(res,"Error get Items"+error)
     }
 }
-
 export const updateItem=async(req:Request,res:Response)=>{
  try {
     const {id}=req.params
