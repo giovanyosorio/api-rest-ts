@@ -1,6 +1,8 @@
+
 import { Auth } from "../interfaces/auth.interface"
 import { User } from "../interfaces/user.interface"
 import UserModel from "../models/users"
+import { encrypt, verified } from "../utils/bcrypt.handle"
 
 const registerNewUser=async({email,password,name}:User)=>{
 
@@ -8,12 +10,25 @@ const registerNewUser=async({email,password,name}:User)=>{
     if(checkUser){
         return "alredy user" 
     }
-    const createUser=await UserModel.create({email,password,name})
+    const passwordEncrypt=await encrypt(password)
+    const createUser=await UserModel.create({email,password:passwordEncrypt,name})
     return createUser
 }
 
-const loginUser=async()=>{
+const loginUser=async({email,password}:Auth)=>{
+   const checkUser=await UserModel.findOne({email})
+    if(!checkUser){
+        return "not found user" 
+    }
 
+    const passwordHash=checkUser.password//encriptado
+    const isCorrect=await verified(password,passwordHash)
+    if(!isCorrect){
+        return "password incorrect";
+    }
+    else{
+        return checkUser
+    }
 }
 
 export {registerNewUser,loginUser}

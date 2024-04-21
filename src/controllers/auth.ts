@@ -3,7 +3,15 @@ import { registerNewUser,loginUser } from "../services/auth"
 
 
 const loginController =async({body}:Request,res:Response)=>{
-
+  try {
+    const {email,password}=body
+    const responseUser=await loginUser({email,password})
+    console.log(responseUser)
+    res.send(responseUser)
+  } catch (error) {
+   console.log(error)
+  }
+  
 }
 
 
