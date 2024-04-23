@@ -18,6 +18,3 @@ export const getORders=async(req:RequExt,res:Response)=>{
         handlehttp(res,"Error get Items"+error)
     }
 }
-
-
-
